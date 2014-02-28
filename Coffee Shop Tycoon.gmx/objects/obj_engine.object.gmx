@@ -105,6 +105,7 @@ SL_global_cast_obj(1, obj_cashier, -1,1,1);
 SL_global_cast_obj(1, obj_coffeeMachine, -1,1,1); 
 SL_global_cast_obj(1, obj_customer, -1,1,1); 
 SL_global_cast_obj(1, obj_worker, -1,1,1); 
+SL_global_cast_obj(1, obj_table, -1,1,1); 
 
 SL_add_light(obj_tableLamp); // Définit l'objet lumière
 SL_add_light(obj_light); // Définit l'objet lumière

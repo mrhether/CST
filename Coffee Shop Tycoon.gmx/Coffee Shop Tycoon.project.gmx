@@ -13,6 +13,8 @@
     <sprite>sprites\sprite3</sprite>
     <sprite>sprites\spr_cashier</sprite>
     <sprite>sprites\spr_coffeemaker</sprite>
+    <sprite>sprites\spr_table</sprite>
+    <sprite>sprites\spr_chair</sprite>
     <sprite>sprites\sprite7</sprite>
     <sprite>sprites\sprite8</sprite>
     <sprites name="HUD">
@@ -74,6 +76,10 @@
     <scripts name="Varius">
       <script>scripts\draw_curve.gml</script>
     </scripts>
+    <scripts name="Worker">
+      <script>scripts\setGrid.gml</script>
+      <script>scripts\moveToPoint.gml</script>
+    </scripts>
   </scripts>
   <fonts name="fonts">
     <font>fonts\arial</font>
@@ -90,17 +96,19 @@
     <object>objects\objDoor</object>
     <object>objects\wallManager</object>
     <object>objects\objWall</object>
+    <object>objects\obj_chair</object>
     <object>objects\obj_cashier</object>
+    <object>objects\obj_table</object>
     <object>objects\obj_coffeeMachine</object>
     <object>objects\obj_crate</object>
     <object>objects\obj_light</object>
     <object>objects\obj_tableLamp</object>
-    <object>objects\obj_engine</object>
     <object>objects\cameraController</object>
     <object>objects\obj_customer</object>
     <object>objects\obj_customerCreator</object>
     <object>objects\obj_coffee</object>
     <object>objects\obj_worker</object>
+    <object>objects\obj_engine</object>
     <object>objects\avoidable</object>
     <object>objects\obj_3D</object>
     <object>objects\obj_Menu</object>

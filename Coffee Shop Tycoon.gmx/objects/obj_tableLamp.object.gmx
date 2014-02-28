@@ -41,6 +41,7 @@ SL_light_cast_obj(objWall,-1);
 SL_light_cast_obj(objDoor,-1);
 SL_light_cast_obj(obj_customer,-1);
 SL_light_cast_obj(obj_coffee,-1);
+SL_light_cast_obj(obj_chair,-1);
 //SL_light_cast_obj(obj_cashier,-1);
 
 SL_light_ini_end(); // Termine l'initialisation de l'objet light

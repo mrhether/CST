@@ -35,6 +35,8 @@ creations[3] = obj_coffeeMachine;
 creationImage[3] = spr_coffeemaker;
 creations[4] = obj_worker;
 creationImage[4] = sprite3;
+creations[5] = obj_table;
+creationImage[5] = spr_table;
 currentCreation = 0;
 
 xPos = round(mouse_x/64)*64;
@@ -66,8 +68,9 @@ currentImage = creationImage[currentCreation];
           <argument>
             <kind>1</kind>
             <string>currentImage = creationImage[currentCreation];
-xPos = round(mouse_x/64)*64;
-yPos = round(mouse_y/64)*64;
+snap = 64
+xPos = round(mouse_x/snap)*snap;
+yPos = round(mouse_y/snap)*snap;
 angle = 0
 if (currentCreation == 1) {
     nearestWall = instance_nearest(mouse_x, mouse_y, objWall)
