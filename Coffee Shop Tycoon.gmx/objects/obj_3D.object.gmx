@@ -140,8 +140,12 @@ rotation = global.rotation;
     }
     //draw_rectangle(x1+1,y2-mask_height/2,x2-1,y1-dy+mask_height/2,false)
     //draw_ellipse(x1,y1,x2,y2,false);
-    
+    circle = false;
+    if (circle) {
+        draw_sprite_ext(sprite_index,image_single,x+dx,y-dy,1,1,rotation,c_white,1);
+    }
     //draw_sprite(sprite_index,0,x+dx,y-dy);
+
     draw_sprite_ext(sprite_index,image_single,x+dx,y-dy,1,1,image_angle,c_white,1);
 } else {
     draw_self();

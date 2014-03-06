@@ -111,21 +111,26 @@ draw_set_valign(fa_top)
 draw_set_color(c_white)
 
 draw_set_font(fTwCenBoldL)
-draw_text(view_wview[0]*0.01,(view_wview[0]*0.001)-((1-Fade)*200),"Money");
+draw_text(view_wview[0]*0.01,(view_hview[0]*0.01)-((1-Fade)*200),"Money");
 draw_set_font(fTwCenL)
-draw_text(view_wview[0]*0.01,(view_wview[0]*0.001)-((1-Fade)*200) + 40, "$" + string(global.money));
+draw_text(view_wview[0]*0.01,(view_hview[0]*0.01)-((1-Fade)*200) + 40, "$" + string(global.money));
 
 draw_set_halign(fa_right)
 draw_set_valign(fa_top)
 
 draw_set_font(fTwCenBoldL)
-draw_text(view_wview[0]*0.99,(view_wview[0]*0.001)-((1-Fade)*200),"Popularity");
+draw_text(view_wview[0]*0.99,(view_hview[0]*0.01)-((1-Fade)*200),"Popularity");
 draw_set_font(fTwCenL)
-draw_text(view_wview[0]*0.99,(view_wview[0]*0.001)-((1-Fade)*200) + 40, "" + string(global.popularity));
+draw_text(view_wview[0]*0.99,(view_hview[0]*0.01)-((1-Fade)*200) + 40, "" + string(global.popularity));
 
+draw_rectangle_color(
+        view_wview[0]*0.01,
+        view_hview[0]*0.98,
+        view_wview[0]*0.99,
+        view_hview[0]*0.99,
+        c_blue,c_yellow,c_yellow,c_blue,false)
 
-
-draw_set_alpha(1)
+draw_set_alpha(1);
 </string>
           </argument>
         </arguments>

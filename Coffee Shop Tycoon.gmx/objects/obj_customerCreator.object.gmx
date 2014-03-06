@@ -25,10 +25,11 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var chance = min(350,power(global.popularity/3,0.5));
-
-if ((random(400 - chance) &lt; 2) and not instance_position(x,y,obj_customer)) {
-    instance_create(x-32+random(64),y-32+random(64),obj_customer);
+            <string>var chance = min(350,global.popularity);
+xx = x-64+random(128)
+yy = y-64+random(128)
+if ((random(500) &lt; max(2,power(global.popularity, .5))) and not instance_position(xx,yy,obj_customer)) {
+    instance_create(xx,yy,obj_customer);
 }
 </string>
           </argument>

@@ -78,11 +78,15 @@ SL_engine_render();
 
 // Variables de base
 global.sl_viewid  = 0;    // Index de la view dans laquelle afficher les effets
-//sl_buffer_xmargin = 8;    // Marges du buffer
-//sl_buffer_ymargin = 8;
+sl_buffer_xmargin = 8;    // Marges du buffer
+sl_buffer_ymargin = 8;
 //sl_timespeed = 1/60 * (room_speed/120)
 sl_timespeed = 0;
 sl_maxexposure   = 0.45; // Facteur maximal de saturation des lumières
+
+//sl_ambient_color        = c_white; // Couleur de la lumière ambiante
+//global.sl_ambient_light = 0.1; // Puissance de la lumière ambiante
+//global.sl_lightlist[0]  = -1; // Liste les objets light
 
 // Variables relatives aux ombres solaires
 sl_sunshadows_active      = true; // Active le rendu des ombres du soleil
