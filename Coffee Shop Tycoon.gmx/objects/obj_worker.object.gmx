@@ -167,6 +167,7 @@ if (collision_circle(x,y,14,obj_worker,false,true)) {
     var yy=path_get_point_y(path_index,1);
     if (near.path_speed == 1) {
         path_speed = 0.5;
+        near.path_speed = 1
     }
 } else {
     path_speed = 1;

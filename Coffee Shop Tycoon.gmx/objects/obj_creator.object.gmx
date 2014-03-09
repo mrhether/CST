@@ -34,7 +34,7 @@ creationImage[2] = spr_cashier;
 creations[3] = obj_coffeeMachine;
 creationImage[3] = spr_coffeemaker;
 creations[4] = obj_worker;
-creationImage[4] = sprite3;
+creationImage[4] = spr_customer1;
 creations[5] = obj_table;
 creationImage[5] = spr_table;
 currentCreation = 0;
@@ -142,6 +142,42 @@ with wallManager {
         </arguments>
       </action>
     </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>var imageSize = 64
+var length = array_length_1d(creations);
+var start = view_hview[0];
+for (var i = 0; i &lt; length; i++) {
+    if (i mod 2) c = 0.65 else c=0.8
+    draw_set_alpha(c)
+    draw_roundrect_color(
+        imageSize*i*0,start - imageSize*i,imageSize*1,start - imageSize*(i+1),
+        c_black,c_black,false);
+    draw_set_alpha(1)
+    draw_sprite_ext(
+        creationImage[i],0,imageSize/2,start - imageSize*(i+0.5),
+        0.75,0.75,0,c_white,1);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
@@ -161,6 +197,7 @@ with wallManager {
             <kind>1</kind>
             <string>draw_ellipse_color(xPos-16,yPos-16,xPos+16,yPos+16,c_white,c_white,false);
 draw_sprite_ext(currentImage,0,xPos,yPos,1,1,angle,c_white,0.3);
+
 
 </string>
           </argument>
