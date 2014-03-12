@@ -155,10 +155,13 @@ alarm[0] = 5
           <argument>
             <kind>1</kind>
             <string>//draw_sprite(sprite_index,min(12,coffeeCount),x,y)
-event_inherited();
 if (not open) {
+    draw_set_alpha(0.5)
     draw_circle_color(x,y,8,c_red,c_red,false);
+    draw_set_alpha(1)
 }
+event_inherited();
+
 </string>
           </argument>
         </arguments>

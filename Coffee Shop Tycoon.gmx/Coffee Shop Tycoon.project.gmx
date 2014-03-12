@@ -82,6 +82,7 @@
       <script>scripts\moveToPoint.gml</script>
     </scripts>
     <script>scripts\openChair.gml</script>
+    <script>scripts\setCreationItem.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\arial</font>

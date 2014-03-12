@@ -27,8 +27,12 @@
             <kind>1</kind>
             <string>//view_angle[0] = 45;
 //view_hview[0] = view_hview[0] + view_hview[0]
-global.heightMod = 1;
+global.heightMod = 0;
 global.rotation = 90;
+global.threed = false;
+
+rotationThreed = 110;
+rotationTop = 90;
 </string>
           </argument>
         </arguments>
@@ -92,35 +96,81 @@ if keyboard_check(right) {
 }
 
 if (keyboard_check(vk_left)) {
-    view_angle[0] -= 2;
+    //view_angle[0] -= 2;
 }
 if (keyboard_check(vk_right)) {
-    view_angle[0] += 2;
+    //view_angle[0] += 2;
 }
 
 rotation = global.rotation;
 height = global.heightMod;
 
-if (keyboard_check(vk_left)) {
+if (keyboard_check(vk_right)) {
     rotation +=2;
 }
-if (keyboard_check(vk_right)) {
+if (keyboard_check(vk_left)) {
     rotation -= 2;
 }
 if (rotation &lt; 0) rotation += 360
 rotation = rotation mod 360
 
-if (keyboard_check(vk_down)) {
-    height -= 0.1;
-}
-if (keyboard_check(vk_up)) {
+if (keyboard_check(vk_right)) {
     height += 0.1;
 }
+if (keyboard_check(vk_left)) {
+    height -= 0.1;
+}
+
 height = max(height,0)
 height = min(height,1)
+rotation = max(rotation,90)
+rotation = min(rotation,110)
+view_angle[0] += (global.rotation - rotation);
 
 global.rotation = rotation;
 global.heightMod = height;
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="10" enumb="16">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//if (keyboard_check_released(vk_shift)) {
+    if not global.threed {
+        global.threed = true
+        height = 1;
+        rotation = rotationThreed;
+        view_angle[0] = -(rotationThreed - 90);
+        global.rotation = rotation;
+        global.heightMod = height;
+    } else if global.threed{
+        global.threed = false
+        height = 0;
+        rotation = rotationTop;
+        view_angle[0] = -(rotationTop - 90);
+        global.rotation = rotation;
+        global.heightMod = height;
+    }
+    
+//}
 
 
 </string>
