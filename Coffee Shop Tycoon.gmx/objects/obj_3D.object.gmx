@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>obj_shadow</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -54,11 +54,11 @@ sDepth = depth
             <string>if (global.heightMod &gt; 0) {
     if ( 0 &lt; rotation and rotation &lt;= 90 ) {
         quad = 1
-        depth = x-y-1000
+        depth = (x*0.0)-y-1000
     }
     if ( 90 &lt; rotation and rotation &lt;= 180 ) {
         quad = 2
-        depth = -x-y-1000
+        depth = -(x/2)-y-1000
     }
     if ( 180 &lt; rotation and rotation &lt;= 270 ) {
         quad = 3
@@ -78,7 +78,7 @@ rotation = global.rotation;
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="0">
+    <event eventtype="8" enumb="73">
       <action>
         <libid>1</libid>
         <id>603</id>

@@ -25,17 +25,20 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>global.coffeeAmount = 1
-global.coffeeAmountMax = 4
-global.coffeeAmountMin = 0
-global.waterTemp = 100
-global.waterTempMax = 120
-global.waterTempMin = 70
-global.brewTime = 5
-global.brewTimeMax = 15
-global.brewTimeMin = 0
+            <string>global.coffeeAmount = 1;
+global.coffeeAmountMax = 4;
+global.coffeeAmountMin = 0;
+global.waterTemp = 100;
+global.waterTempMax = 120;
+global.waterTempMin = 70;
+global.brewTime = 5;
+global.brewTimeMax = 12;
+global.brewTimeMin = 0.1;
 
 global.coffeePrice = 1.00;
+global.coffeePriceMax = 10.00;
+global.coffeePriceMin = 0.00;
+
 global.keepCoffeeLength = 10;
 
 global.money = 1000;

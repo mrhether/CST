@@ -37,12 +37,13 @@ for (i1=0; i1<=sl_layers_count; i1+=1)
     draw_rectangle(0,0,(view_wview[global.sl_viewid]+sl_buffer_xmargin*2)*sl_buffer_texturesize,(view_hview[global.sl_viewid]+sl_buffer_ymargin*2)*sl_buffer_texturesize,0);
     draw_set_color(c_white);
     draw_set_blend_mode(bm_normal);
+    surface_reset_target();
 }
-surface_reset_target();
 
+//surface_reset_target();
 /// - OMBRES SOLAIRES
 
-if sl_sunshadows_active{
+if sl_sunshadows_active {
 
 sl_sunshadows_refreshcounter-=1;
 
@@ -50,14 +51,17 @@ if sl_sunshadows_refresh && sl_sunshadows_refreshcounter<=0
 {
     // Calcul des composantes des ombres solaires
     if sl_tod_active
-    {sl_sunshadows_direction = ((global.sl_time-sl_tod[sl_tod_index,0])/(sl_tod[sl_tod_index+1,0]-sl_tod[sl_tod_index,0]))*(sl_tod[sl_tod_index+1,5]-sl_tod[sl_tod_index,5])+sl_tod[sl_tod_index,5];
-     sl_sunshadows_length    = ((global.sl_time-sl_tod[sl_tod_index,0])/(sl_tod[sl_tod_index+1,0]-sl_tod[sl_tod_index,0]))*(sl_tod[sl_tod_index+1,6]-sl_tod[sl_tod_index,6])+sl_tod[sl_tod_index,6]};
+    {
+    sl_sunshadows_direction = ((global.sl_time-sl_tod[sl_tod_index,0])/(sl_tod[sl_tod_index+1,0]-sl_tod[sl_tod_index,0]))*(sl_tod[sl_tod_index+1,5]-sl_tod[sl_tod_index,5])+sl_tod[sl_tod_index,5];
+    sl_sunshadows_length    = ((global.sl_time-sl_tod[sl_tod_index,0])/(sl_tod[sl_tod_index+1,0]-sl_tod[sl_tod_index,0]))*(sl_tod[sl_tod_index+1,6]-sl_tod[sl_tod_index,6])+sl_tod[sl_tod_index,6]};
     sl_sunshadows_light      = -(sl_sunshadows_alpha/(1-sl_sunshadows_alphalimit)*(global.sl_ambient_light-sl_sunshadows_alphalimit))+1;
-    
+                //surface_reset_target();
+
     if sl_sunshadows_light < 1
     {
         for (i1=0; i1<=sl_layers_count; i1+=1)
         {
+
             surface_set_target(sl_sunshadows_surface1[0]); // Création du sample
             draw_clear(c_white);
             
@@ -84,10 +88,13 @@ if sl_sunshadows_refresh && sl_sunshadows_refreshcounter<=0
                 
                 draw_sprite_ext(global.sl_castlist[i2,4],global.sl_castlist[i2,5],(global.sl_castlist[i2,6]+sl_xx)*sl_sunshadows_texturesize,(global.sl_castlist[i2,7]+sl_yy)*sl_sunshadows_texturesize,global.sl_castlist[i2,9]*sl_sunshadows_texturesize,global.sl_castlist[i2,10]*sl_sunshadows_texturesize,global.sl_castlist[i2,11],c_black,global.sl_castlist[i2,12]);
             }
+
+            surface_reset_target();
             
             surface_set_target(sl_sunshadows_surface1[1]); // Projection des ombres
             draw_clear(c_white);
             draw_set_blend_mode_ext(bm_dest_color,bm_zero);
+            
             
             i = 1;
             
@@ -107,8 +114,10 @@ if sl_sunshadows_refresh && sl_sunshadows_refreshcounter<=0
                     if b break;
                     draw_surface(sl_sunshadows_surface1[!i],lengthdir_x(rl,sl_sunshadows_direction),lengthdir_y(rl,sl_sunshadows_direction)); 
                     i = !i;
+                    surface_reset_target();
                 }
             }
+            surface_reset_target();
             
             surface_set_target(sl_sunshadows_surface2); // Composition finale des ombres
             if i1 = 0 draw_clear(c_white);
@@ -141,14 +150,16 @@ if sl_sunshadows_refresh && sl_sunshadows_refreshcounter<=0
                 draw_rectangle_color(0,0,(view_wview[global.sl_viewid]+sl_buffer_xmargin*2)*sl_buffer_texturesize,(view_hview[global.sl_viewid]+sl_buffer_ymargin*2)*sl_buffer_texturesize,c_white,c_white,c_white,c_white,0);
                 draw_set_alpha(1);
             }
+            surface_reset_target();
         }
-        surface_reset_target();
+        
     }
 }
 
 if sl_sunshadows_refreshcounter<=0 sl_sunshadows_refreshcounter = sl_sunshadows_refreshrate;
 global.sl_texlist_shad[0,0]  = -1;
-global.sl_texlist_shad_index = 0};
+global.sl_texlist_shad_index = 0;
+};
 
 /// - OMBRES AMBIANTES
 
@@ -226,12 +237,14 @@ for (i1=0; global.sl_lightlist[i1]!=-1; i1+=1) with global.sl_lightlist[i1]
             
                 for (i2=0; global.sl_castlist[i2,0]!=-1; i2+=1) if global.sl_castlist[i2,3] = true
                 draw_sprite_ext(global.sl_castlist[i2,4],global.sl_castlist[i2,5],(global.sl_castlist[i2,6]-sl_light_x+sl_xx)*sl_ss,(global.sl_castlist[i2,7]-sl_light_y+sl_yy)*sl_ss,global.sl_castlist[i2,9]*sl_ss,global.sl_castlist[i2,10]*sl_ss,global.sl_castlist[i2,11],c_black,global.sl_castlist[i2,12]*sl_light_shadowsharpness);
-            
+                surface_reset_target();
+                
                 surface_set_target(global.sl_light_gbuffer);
                 draw_clear(c_white);
                 
                 draw_set_blend_mode_ext(bm_dest_color,bm_zero);
                 draw_surface_ext(other.sl_buffer_surface1,0,0,sl_xs,sl_ys,0,c_white,1);
+                surface_reset_target();
             }
             
             draw_set_blend_mode_ext(bm_dest_color,bm_zero);
@@ -247,6 +260,7 @@ for (i1=0; global.sl_lightlist[i1]!=-1; i1+=1) with global.sl_lightlist[i1]
                 texture_set_interpolation(1);
                 draw_surface_ext(global.sl_light_gbuffer,sl_sz-sl_sz*sl_sps,sl_sz-sl_sz*sl_sps,sl_sps,sl_sps,0,c_white,1);
                 sl_spi *= 2;
+                surface_reset_target();
                 
                 surface_set_target(global.sl_light_gbuffer);
                 draw_clear(c_white);
@@ -256,8 +270,9 @@ for (i1=0; global.sl_lightlist[i1]!=-1; i1+=1) with global.sl_lightlist[i1]
                 texture_set_interpolation(1);
                 draw_surface_ext(sl_light_surface,sl_sz-sl_sz*sl_sps,sl_sz-sl_sz*sl_sps,sl_sps,sl_sps,0,c_white,1);
                 sl_spi *= 2;
+                surface_reset_target();
             }
-            
+
             surface_set_target(sl_light_surface); // Composition finale
             draw_clear(c_black);
             
@@ -317,6 +332,7 @@ if sl_ambientshadows_active if !sl_ambientshadows_lock
     draw_set_blend_mode_ext(bm_dest_color,bm_zero);
     draw_surface(sl_ambientshadows_surface,0,0);
 }
+surface_reset_target();
 
 surface_set_target(sl_buffer_surface2); // Buffer de surexposition
 draw_clear(c_black);

@@ -74,7 +74,8 @@ SL_engine_render();
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>SL_engine_ini_begin(); // Commence l'initialisation du système
+            <string>
+SL_engine_ini_begin(); // Commence l'initialisation du système
 
 // Variables de base
 global.sl_viewid  = 0;    // Index de la view dans laquelle afficher les effets
@@ -102,9 +103,11 @@ sl_sunshadows_layerscale[1] = 0.1;
 
 sl_ambientshadows_active = true; // Active le rendu des ombres ambiantes
 
+//SL_sprite_set_ambient(obj_worker);
+
 //SL_sprite_set_ambient(objWall); 
-SL_global_cast_obj(0, objWall, -1,1,1); 
-SL_global_cast_obj(0, objDoor, -1,1,1); 
+SL_global_cast_obj(0, objWall, -1,1,0); 
+SL_global_cast_obj(0, objDoor, -1,1,0); 
 SL_global_cast_obj(1, obj_cashier, -1,1,1); 
 SL_global_cast_obj(1, obj_coffeeMachine, -1,1,1); 
 SL_global_cast_obj(1, obj_customer, -1,1,1); 

@@ -80,6 +80,7 @@ open = true;
             <kind>1</kind>
             <string>open=false
 alarm[0] = 5
+image_angle += -2 + random(4)
 </string>
           </argument>
         </arguments>

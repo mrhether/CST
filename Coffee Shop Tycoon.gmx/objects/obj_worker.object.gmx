@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>-2</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>obj_shadow</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -54,7 +54,7 @@ showGrid = false;
         <arguments>
           <argument>
             <kind>13</kind>
-            <string>16711680</string>
+            <string>16776960</string>
           </argument>
           <argument>
             <kind>0</kind>
@@ -137,6 +137,14 @@ showGrid = false;
     var inst = instance_nearest(x,y,obj_cashier);
     if (moving == false) {
         setGrid();
+
+        cashRegisters = nearestInstances(x,y,obj_cashier,instance_number(obj_cashier));
+        var size = ds_list_size(cashRegisters);
+        for (i = 0; i &gt; size; i += 1){
+            cr = ds_list_find_value(cashRegisters,i);
+            if (inst.coffeeCount == 0) inst = cr;
+        }
+        
         moveToPoint(x,y,inst.x,inst.y,1+random(2));
         moving = true;
         alarm[0] = 400;
@@ -181,7 +189,7 @@ if (collision_circle(x,y,14,obj_worker,false,true)) {
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="0">
+    <event eventtype="8" enumb="73">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -203,6 +211,7 @@ image_angle = direction-90;
 draw_self()
 draw_path(path,0,0,true);
 if (workTimer &gt; 0) {
+    
     draw_rectangle(x-16,y-22,x-16+workTimer/100*32,y-18,false);
 }
 

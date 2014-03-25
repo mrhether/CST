@@ -61,6 +61,9 @@
     <option_android_pocketchange_enable>0</option_android_pocketchange_enable>
     <option_android_pocketchange_id></option_android_pocketchange_id>
     <option_android_pocketchange_test_enable>0</option_android_pocketchange_test_enable>
+    <option_android_push_enable>0</option_android_push_enable>
+    <option_android_push_id></option_android_push_id>
+    <option_android_scale>-1</option_android_scale>
     <option_android_set_device_id></option_android_set_device_id>
     <option_android_splash_png>Configs\Default\android\splash.png</option_android_splash_png>
     <option_android_texture_page>1024</option_android_texture_page>
@@ -129,6 +132,7 @@
     <option_ios_flurry_enable>0</option_ios_flurry_enable>
     <option_ios_flurry_id></option_ios_flurry_id>
     <option_ios_google_analytics_enable>0</option_ios_google_analytics_enable>
+    <option_ios_google_play_id></option_ios_google_play_id>
     <option_ios_google_tracking_id></option_ios_google_tracking_id>
     <option_ios_icon_114>Configs\Default\ios\icons\icon114.png</option_ios_icon_114>
     <option_ios_icon_120>Configs\Default\ios\icons\icon120.png</option_ios_icon_120>
@@ -153,6 +157,8 @@
     <option_ios_orient_portrait>-1</option_ios_orient_portrait>
     <option_ios_orient_portrait_upside_down>-1</option_ios_orient_portrait_upside_down>
     <option_ios_provisioning>&lt; Press refresh to fetch provisioning list from Mac&gt;</option_ios_provisioning>
+    <option_ios_push_enable>0</option_ios_push_enable>
+    <option_ios_scale>-1</option_ios_scale>
     <option_ios_set_device_id></option_ios_set_device_id>
     <option_ios_splash_png>Configs\Default\ios\splash.png</option_ios_splash_png>
     <option_ios_texture_page>1024</option_ios_texture_page>
@@ -166,6 +172,7 @@
     <option_linux_scale>-1</option_linux_scale>
     <option_linux_screenkey>-1</option_linux_screenkey>
     <option_linux_sizeable>0</option_linux_sizeable>
+    <option_linux_splash_png>Configs\Default\linux\splash.png</option_linux_splash_png>
     <option_linux_steam_app_id>0</option_linux_steam_app_id>
     <option_linux_sync>0</option_linux_sync>
     <option_linux_texture_page>2048</option_linux_texture_page>
@@ -201,6 +208,12 @@
     <option_noscreensaver>true</option_noscreensaver>
     <option_ouya_packaging>0</option_ouya_packaging>
     <option_priority>0</option_priority>
+    <option_ps4_interpolation>true</option_ps4_interpolation>
+    <option_ps4_package_id>IV0002-NPXS29129_00-APP0990000000022</option_ps4_package_id>
+    <option_ps4_passcode>GvE6xCpZxd96scOUGuLPbuLp8O800B0s</option_ps4_passcode>
+    <option_psvita_interpolation>true</option_psvita_interpolation>
+    <option_psvita_package_id>EP9000-NPXB01693_00-GMSTUDIORUNNER00</option_psvita_package_id>
+    <option_psvita_passcode>5MHZUpPpbQLKAkttvpJzA6EaWgsiWv1w</option_psvita_passcode>
     <option_quitkey>true</option_quitkey>
     <option_resolution>0</option_resolution>
     <option_savekey>true</option_savekey>
@@ -208,11 +221,12 @@
     <option_scaleprogress>true</option_scaleprogress>
     <option_screenkey>True</option_screenkey>
     <option_screenshotkey>true</option_screenshotkey>
+    <option_shortcircuit>True</option_shortcircuit>
     <option_showcursor>True</option_showcursor>
     <option_showprogress>1</option_showprogress>
     <option_sizeable>True</option_sizeable>
     <option_stayontop>false</option_stayontop>
-    <option_sync_vertex>0</option_sync_vertex>
+    <option_sync_vertex>1</option_sync_vertex>
     <option_textureGroup0_border>2</option_textureGroup0_border>
     <option_textureGroup0_nocropping>0</option_textureGroup0_nocropping>
     <option_textureGroup0_parent>&lt;none&gt;</option_textureGroup0_parent>
@@ -227,12 +241,15 @@
     <option_tizen_flurry_id></option_tizen_flurry_id>
     <option_tizen_google_analytics_enable>0</option_tizen_google_analytics_enable>
     <option_tizen_google_tracking_id></option_tizen_google_tracking_id>
+    <option_tizen_iap_groupID></option_tizen_iap_groupID>
     <option_tizen_icon>Configs\Default\tizen\icon117.png</option_tizen_icon>
+    <option_tizen_interpolate>-1</option_tizen_interpolate>
     <option_tizen_major_version>1</option_tizen_major_version>
     <option_tizen_minor_version>0</option_tizen_minor_version>
     <option_tizen_network_urls></option_tizen_network_urls>
     <option_tizen_orientation>0</option_tizen_orientation>
-    <option_tizen_scaling>1</option_tizen_scaling>
+    <option_tizen_push_enable>0</option_tizen_push_enable>
+    <option_tizen_scaling>0</option_tizen_scaling>
     <option_tizen_splash_png>Configs\Default\tizen\splash.png</option_tizen_splash_png>
     <option_tizen_texture_page>1024</option_tizen_texture_page>
     <option_tizen_usesplash>False</option_tizen_usesplash>
@@ -308,7 +325,7 @@
     <option_winphone_advertising_enable>0</option_winphone_advertising_enable>
     <option_winphone_advertising_key></option_winphone_advertising_key>
     <option_winphone_advertising_testing_enable>0</option_winphone_advertising_testing_enable>
-    <option_winphone_advertising_type></option_winphone_advertising_type>
+    <option_winphone_advertising_type>MS Advertising</option_winphone_advertising_type>
     <option_winphone_author>You</option_winphone_author>
     <option_winphone_build_version>0</option_winphone_build_version>
     <option_winphone_cycle_small_image>Configs\Default\WinPhone\CycleSmall.png</option_winphone_cycle_small_image>
@@ -344,6 +361,7 @@
     <option_winphone_iconic_wide_content_2></option_winphone_iconic_wide_content_2>
     <option_winphone_iconic_wide_content_3></option_winphone_iconic_wide_content_3>
     <option_winphone_iconic_wide_image>Configs\Default\WinPhone\IconicWide.png</option_winphone_iconic_wide_image>
+    <option_winphone_interpolate>-1</option_winphone_interpolate>
     <option_winphone_landscape_allowed>-1</option_winphone_landscape_allowed>
     <option_winphone_landscape_flipped_allowed>-1</option_winphone_landscape_flipped_allowed>
     <option_winphone_major_version>1</option_winphone_major_version>
@@ -352,6 +370,7 @@
     <option_winphone_publisher>YourPublisherName</option_winphone_publisher>
     <option_winphone_publisher_id>f47823f0-220d-459a-bf68-b6ea984b24a8</option_winphone_publisher_id>
     <option_winphone_revision_version>0</option_winphone_revision_version>
+    <option_winphone_scale>-1</option_winphone_scale>
     <option_winphone_supports_720p>-1</option_winphone_supports_720p>
     <option_winphone_supports_wvga>-1</option_winphone_supports_wvga>
     <option_winphone_supports_wxga>-1</option_winphone_supports_wxga>

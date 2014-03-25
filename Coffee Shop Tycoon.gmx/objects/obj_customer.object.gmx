@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>-2</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>obj_shadow</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -34,12 +34,16 @@ showGrid = false;
 
 grid = mp_grid_create(0,0,room_width/16,room_height/16,16,16);
 mp_grid_add_instances(grid,objWall,0);
+mp_grid_add_instances(grid,obj_table,0);
 path = path_add();
-var inst = instance_nearest(x,y,obj_cashier);
+var n = floor(random(instance_number(obj_cashier))) // get a random whole number based on obj amount
+var inst = instance_find( obj_cashier , n ) // find that n'th instance of that type
 mp_grid_path(grid,path,x,y,inst.x,inst.y+46,1);
 path_start(path,1+random(2),false,true);
 
 happiness = 0;
+money = random(15);
+hasCoffee = false
 </string>
           </argument>
         </arguments>
@@ -60,7 +64,7 @@ happiness = 0;
         <arguments>
           <argument>
             <kind>0</kind>
-            <string>1000</string>
+            <string>1000+random(1000)</string>
           </argument>
           <argument>
             <kind>4</kind>
@@ -92,6 +96,35 @@ happiness = 0;
         </arguments>
       </action>
     </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>var enjoy = true
+if(enjoy == true) {
+    thirsty = true
+} else {
+    thirsty = false
+}
+reversed = false
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="2" enumb="0">
       <action>
         <libid>1</libid>
@@ -109,7 +142,14 @@ happiness = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>thirsty = false
+            <string>var enjoy = false
+if (random(5) &lt; 2) enjoy = true;
+
+if(enjoy == true) {
+    thirsty = true
+} else {
+    thirsty = false
+}
 reversed = false
 </string>
           </argument>
@@ -137,6 +177,7 @@ reversed = false
     cash = instance_nearest(x,y,obj_cashier);
     if (distance_to_object(cash) &lt;= 1 and cash.coffeeCount &gt; 0) {
         thirsty = false;
+        hasCoffee = true
         happiness += 5;
         global.money += global.coffeePrice;
         var textObj =  instance_create(x,y,obj_text);
@@ -151,7 +192,11 @@ reversed = false
     (1 - customer.path_position)*path_get_length(customer.path) &lt;= 
     (1 - path_position)*path_get_length(path)) {
         path_speed = 0;
-        happiness -= 0.01
+        if (collision_point(x,y,objFloor,false,true)) {
+            happiness -= 0.01
+        } else {
+            happiness -= 0.02
+        }
         if (happiness == -5) alarm[0] = 1;
     } else {
         path_speed = 1;
@@ -196,7 +241,7 @@ reversed = false
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="0">
+    <event eventtype="8" enumb="73">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -220,6 +265,9 @@ draw_text(x,y+32,
     (1- path_position)*path_get_length(path));
     }*/
     //draw_circle(x,y,16,true);
+    
+    if (hasCoffee) sprite_index = spr_customercoffee;
+    else sprite_index = spr_customer1;
     image_speed = path_get_length(path_index)*(path_position - path_positionprevious)/6;
     image_angle = direction-90;
     draw_self();
