@@ -40,6 +40,7 @@ SL_light_cast_obj(obj_crate,-1);
 SL_light_cast_obj(objWall,-1);
 SL_light_cast_obj(objDoor,-1);
 SL_light_cast_obj(obj_customer,-1);
+SL_light_cast_obj(obj_worker,-1);
 SL_light_cast_obj(obj_coffee,-1);
 SL_light_cast_obj(obj_chair,-1);
 //SL_light_cast_obj(obj_cashier,-1);
@@ -97,6 +98,10 @@ SL_light_free();
             <string>// Mise à jour des coordonnées de la lumière
 sl_light_x = x;
 sl_light_y = y;
+
+if (fps_real &lt; 30){
+    if (random(100) &lt; 2) instance_destroy();
+} 
 </string>
           </argument>
         </arguments>

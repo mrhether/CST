@@ -57,14 +57,16 @@
 if (instDoor.x == x and instDoor.y == y) {
     instance_destroy();
 }
-coffeeCount = 3;
-coffees[0] = instance_create(x,y+28,obj_coffee);
-coffees[1] = instance_create(x+4,y+19,obj_coffee);
-coffees[2] = instance_create(x+2,y+11,obj_coffee);
+coffeeCount = 0;
+//coffees[0] = instance_create(x,y+28,obj_coffee);
+//coffees[1] = instance_create(x+4,y+19,obj_coffee);
+//coffees[2] = instance_create(x+2,y+11,obj_coffee);
 
 //alarm[0] = 60
 event_inherited();
 height=5;    
+
+
 </string>
           </argument>
         </arguments>

@@ -1,4 +1,5 @@
-if (random(4) <  2) {
+alarm[0] = 1000;
+if (random(4) <  2 and hasCoffee == true) {
     with obj_chair {
         if (open == true) {
             open = false;

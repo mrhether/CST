@@ -3,7 +3,7 @@
   <spriteName>wall</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>-3</depth>
+  <depth>-10</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -119,6 +119,30 @@ if (currentCreation == 1) {
     xPos = nearestWall.x;
     yPos = nearestWall.y;
     angle = nearestWall.image_angle;
+}
+if (currentCreation == 3) {
+    nearestWall = instance_nearest(mouse_x, mouse_y, objWall)
+    //xPos = nearestWall.x;
+    //yPos = nearestWall.y;
+    
+    numbers[0] = 0;
+    numbers[1] = 90;
+    numbers[2] = 180;
+    numbers[3] = 270;
+    numbers[4] = 360;
+    
+    dir = point_direction(mouse_x,mouse_y,nearestWall.x,nearestWall.y);
+    dir = dir mod 360
+    distance = abs(numbers[0] - dir);
+    var idx = 0;
+    for(var c = 1; c &lt; 5; c++){
+        var cdistance = abs(numbers[c] - dir);
+        if(cdistance &lt; distance){
+            idx = c;
+            distance = cdistance;
+        }
+    }
+    angle = numbers[idx]-90
 }
 
 if (offset &lt; finalOffset) {
@@ -334,6 +358,8 @@ draw_sprite_ext(currentImage,0,xPos,yPos,1,1,angle,c_white,0.3);
             <string>//draw_ellipse_color(xPos-16,yPos-16,xPos+16,yPos+16,c_white,c_white,false);
 //draw_sprite_ext(currentImage,0,xPos,yPos,1,1,angle,c_white,0.3);
 
+//var d = instance_nearest(mouse_x,mouse_y,objWall)
+//draw_line(mouse_x,mouse_y,d.x,d.y)
 </string>
           </argument>
         </arguments>

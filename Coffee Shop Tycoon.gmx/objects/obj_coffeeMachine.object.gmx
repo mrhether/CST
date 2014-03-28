@@ -61,6 +61,8 @@ coffeeCount = 1;
 alarm[0] = 60
 event_inherited();
 height=5;
+
+rawCoffee = 4;
 </string>
           </argument>
         </arguments>
@@ -83,9 +85,11 @@ height=5;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>alarm[0] = timeFormula(global.waterTemp,global.brewTime,global.coffeeAmount) * 10;
-coffeeCount += 1;
-
+            <string>if (rawCoffee &gt;= global.coffeeAmount) {
+    coffeeCount += 1;
+    rawCoffee -= global.coffeeAmount;
+}
+ alarm[0] = timeFormula(global.waterTemp,global.brewTime,global.coffeeAmount) * 10;
 </string>
           </argument>
         </arguments>
@@ -138,6 +142,29 @@ coffeeCount += 1;
 with coffees[coffeeCount] {
     instance_destroy()
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="73">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>drawSpeachBubble("CoffeeBeans: " + string(rawCoffee) + " CoffeeReady:" + string(coffeeCount))
 </string>
           </argument>
         </arguments>

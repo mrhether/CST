@@ -35,6 +35,7 @@ showGrid = false;
 grid = mp_grid_create(0,0,room_width/16,room_height/16,16,16);
 mp_grid_add_instances(grid,objWall,0);
 mp_grid_add_instances(grid,obj_table,0);
+mp_grid_add_instances(grid,obj_worker,0);
 path = path_add();
 var n = floor(random(instance_number(obj_cashier))) // get a random whole number based on obj amount
 var inst = instance_find( obj_cashier , n ) // find that n'th instance of that type
@@ -44,6 +45,8 @@ path_start(path,1+random(2),false,true);
 happiness = 0;
 money = random(15);
 hasCoffee = false
+enjoy = false
+image_alpha = 0;
 </string>
           </argument>
         </arguments>
@@ -142,11 +145,17 @@ reversed = false
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var enjoy = false
-if (random(5) &lt; 2) enjoy = true;
+            <string>enjoy = false
+if (random(5) &lt; 2 and hasCoffee == true) enjoy = true;
 
 if(enjoy == true) {
     thirsty = true
+    path = path_add();
+    var n = floor(random(instance_number(obj_cashier))) // get a random whole number based on obj amount
+    var inst = instance_find( obj_cashier , n ) // find that n'th instance of that type
+    mp_grid_path(grid,path,x,y,inst.x,inst.y+46,1);
+    path_start(path,1+random(2),false,true);
+    
 } else {
     thirsty = false
 }
@@ -236,12 +245,54 @@ reversed = false
           <argument>
             <kind>1</kind>
             <string>depth = other.depth-1;
+
+if (image_speed == 0) {
+    var table = instance_nearest(x,y,obj_table);
+    var tableDir = point_direction(x,y,table.x,table.y);
+    if(direction &lt; tableDir){
+        direction+=1
+    }
+    if(direction &gt; tableDir){
+        direction-=1
+    }
+}
 </string>
           </argument>
         </arguments>
       </action>
     </event>
     <event eventtype="8" enumb="73">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>
+if (thirsty == true and enjoy == true) {
+    var text = "I'm still thirsty"
+    drawSpeachBubble(text);
+}
+if (reversed == true and hasCoffee == false) {
+    var text = "I'm sick of waiting"
+    drawSpeachBubble(text);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -270,11 +321,11 @@ draw_text(x,y+32,
     else sprite_index = spr_customer1;
     image_speed = path_get_length(path_index)*(path_position - path_positionprevious)/6;
     image_angle = direction-90;
+    if (image_speed == 0) image_index = 0;
+    if (image_alpha &lt; 1) image_alpha += 0.01
     draw_self();
-    draw_set_halign(fa_center)
-    draw_set_valign(fa_center)
-    //draw_text_color(x,y,round(happiness),c_black,c_black,c_black,c_black,1);
-    draw_set_color(c_black);
+
+    //draw_set_color(c_black);
     //draw_curve(x-10,y+5,x+10,y+5,happiness*-15,14);
     //draw_circle(x-5,y-5,1,false);
     //draw_circle(x+5,y-5,1,false);
@@ -305,6 +356,8 @@ draw_text(x,y+32,
           <argument>
             <kind>1</kind>
             <string>showGrid = true;
+
+
 </string>
           </argument>
         </arguments>

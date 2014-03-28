@@ -33,6 +33,32 @@ if (instDoor.x == x and instDoor.y == y) {
 event_inherited()
 height=2;
 open = true;
+alarm[1] = 1;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>image_angle += -8 + random(16)
+x += -4 + random(8)
+y += -4 + random(8)
 </string>
           </argument>
         </arguments>
@@ -80,7 +106,7 @@ open = true;
             <kind>1</kind>
             <string>open=false
 alarm[0] = 5
-image_angle += -2 + random(4)
+
 </string>
           </argument>
         </arguments>
