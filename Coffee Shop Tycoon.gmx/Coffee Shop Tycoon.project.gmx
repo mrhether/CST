@@ -27,16 +27,15 @@
     </sprites>
     <sprite>sprites\spr_customer1</sprite>
     <sprite>sprites\spr_customercoffee</sprite>
-    <sprite>sprites\spr_floor2</sprite>
     <sprite>sprites\spr_field</sprite>
-    <sprite>sprites\bag</sprite>
+    <sprite>sprites\spr_floor2</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
-    <background>background\background4</background>
     <background>background\background1_bck_02</background>
     <background>background\background2_bck_dirt</background>
     <background>background\background3_bck_07</background>
+    <background>background\background4</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -92,8 +91,8 @@
       <script>scripts\moveToPoint.gml</script>
     </scripts>
     <script>scripts\openChair.gml</script>
-    <script>scripts\openHarvest.gml</script>
     <script>scripts\setCreationItem.gml</script>
+    <script>scripts\openHarvest.gml</script>
     <script>scripts\drawSpeachBubble.gml</script>
   </scripts>
   <fonts name="fonts">
@@ -134,14 +133,14 @@
     <object>objects\obj_field</object>
   </objects>
   <rooms name="rooms">
-    <room>rooms\room5</room>
     <room>rooms\room0</room>
+    <room>rooms\room5</room>
     <room>rooms\room3</room>
     <room>rooms\room1</room>
     <room>rooms\room2</room>
     <room>rooms\room4</room>
   </rooms>
-  <constants number="12">
+  <constants number="10">
     <constant name="HM_MAINMENU">0</constant>
     <constant name="HM_COFFEERECIPE">1</constant>
     <constant name="HM_PLAY">2</constant>
@@ -152,8 +151,6 @@
     <constant name="CF_BREWTIME">6</constant>
     <constant name="CF_PRICE">7</constant>
     <constant name="W_FIELD">1</constant>
-    <constant name="W_SERVE">2</constant>
-    <constant name="W_MAKECOFFE">3</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

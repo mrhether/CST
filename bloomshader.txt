@@ -1,0 +1,19 @@
+attribute vec3 in_Position;
+attribute vec2 in_TextureCoord;
+uniform vec2 uScale;
+varying vec2 coord;
+varying vec2 offset0;
+varying vec2 offset1;
+varying vec2 offset2;
+varying vec2 offset3;
+
+void main()
+{
+    coord = in_TextureCoord;
+    offset0 = uScale * vec2(1.0);
+    offset1 = uScale * vec2(2.0);
+    offset2 = uScale * vec2(3.0);
+    offset3 = uScale * vec2(4.0);
+    gl_Position = gm_Matrices[MATRIX_WORLD_VIEW_PROJECTION] * vec4(in_Position, 1.0);
+}
+
