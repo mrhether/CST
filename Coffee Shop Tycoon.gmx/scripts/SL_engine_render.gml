@@ -1,5 +1,8 @@
 /* SL_engine_render();                       */
 /* Calcule l'ensemble des ombres et lumières */
+if (not surface_exists(sl_buffer_surface1)) {
+    SL_engine_ini_end();
+}
 
 var i, i1, r, g, b, j, sl, rl;
 
@@ -206,9 +209,9 @@ for (i1=0; global.sl_lightlist[i1]!=-1; i1+=1) with global.sl_lightlist[i1]
         
         if sl_light_refresh && sl_light_refreshcounter<=0 refresh=true else refresh=false;
         
-        if refresh or sl_light_surface = -1
+        if refresh or sl_light_surface = -1 or !surface_exists(sl_light_surface)
         {
-            if sl_light_surface = -1
+            if sl_light_surface = -1 or !surface_exists(sl_light_surface)
             {
                 instance_activate_region(sl_light_x-sl_sz*sl_light_xscale,sl_light_y-sl_sz*sl_light_yscale,global.sl_light_txsize*sl_light_xscale,global.sl_light_txsize*sl_light_yscale,true);
                 sl_light_surface = surface_create(global.sl_light_txsize,global.sl_light_txsize);

@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>-2</depth>
   <persistent>0</persistent>
-  <parentName>obj_shadow</parentName>
+  <parentName>self</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -25,47 +25,31 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>coffees = 0;
+            <string>event_inherited();
+
+coffees = 0;
 coffeeBeans = 0;
 moving = false;
 
-role = W_FIELD;
 
 workTimer = -1;
 
 setGrid();
-
 ppath = -100;
 showGrid = false;
 
-alarm[0] = random(10)
 
+task = W_MAKE_COFFEE;
+state = S_WAITING;
+
+// moving state
+destX = 0;
+destY = 0;
+
+// performing state
+timer = -1;
 
 </string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>543</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_sprite_color</functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>13</kind>
-            <string>16776960</string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string>1</string>
           </argument>
         </arguments>
       </action>
@@ -111,18 +95,160 @@ alarm[0] = random(10)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (coffees == 0) {
+            <string>
 
-    var coffeeMachine = instance_nearest(x,y,obj_coffeeMachine);
+if (state == S_WAITING) {
+    
+    var previousTask = task;
+    
+    if (previousTask == W_PICK_COFFEE and coffeeBeans == 0) {
+        var field = openHarvest();
+        moveToPoint(x,y,field.x,field.y,2);
+        destX = field.x
+        destY = field.y
+        task = W_PICK_COFFEE;
+    } else {
+        if (coffees == 0) {
+            var coffeeMachine = instance_nearest(x,y,getTObject(obj_coffeeMachine));
+            var i = 1
+            repeat (instance_number(getTObject(obj_coffeeMachine))) {
+                if (coffeeMachine.coffeeCount &gt; 0) break;
+                    i = i + 1;
+                    coffeeMachine = instance_nearest_nth(x,y,getTObject(obj_coffeeMachine),i);
+            }
+            setGrid();
+            if (coffeeMachine.rawCoffee &lt;= obj_variableManager.coffeeAmount and
+                coffeeBeans &lt;= 0 and coffeeMachine.coffeeCount &lt; 2) {
+                var field = openHarvest();
+                moveToPoint(x,y,field.x,field.y,2);
+                destX = field.x
+                destY = field.y
+                task = W_PICK_COFFEE;
+            } else {
+                moveToPoint(x,y,coffeeMachine.x,coffeeMachine.y,2);
+                destX = coffeeMachine.x
+                destY = coffeeMachine.y
+                if (coffeeBeans &gt; 0) task = W_RETURN_COFFEEBEANS;
+                else task = W_MAKE_COFFEE; 
+            }
+        } else {
+            var inst = instance_nearest(x,y,getTObject(obj_cashier));
+            setGrid();
+    
+            cashRegisters = nearestInstances(x,y,getTObject(obj_cashier),instance_number(getTObject(obj_cashier)));
+            var size = ds_list_size(cashRegisters);
+            for (i = 0; i &lt; size; i += 1){
+                var cr = ds_list_find_value(cashRegisters,i);
+                if (cr.coffeeCount == 0) {
+                    inst = cr;  
+                }
+            }
+            moveToPoint(x,y,inst.x,inst.y,2);
+            destX = inst.x
+            destY = inst.y
+            task = W_SERVE_COFFEE;
+        }
+        
+    }
+    
+    alarm[0] = 400;
+    state = S_MOVING;
+    
+} else if (state == S_MOVING) {
+    
+    if (distance_to_point(destX,destY) &lt;= 1) {
+        state = S_PERFORMING;
+        timer = 100;
+    }
+    // check if reached objective and if yes change state to performing
+
+} else if (state == S_PERFORMING) {
+
+    // check if done performing if so set next task and wait
+    timer--;
+    if (timer &lt;= 0) {
+        if (task == W_PICK_COFFEE) {
+        
+            var field = instance_nearest(x,y,obj_field);
+            if (field.harvest == true) {
+                field.harvest = false;
+                field.alarm[0] = 1;
+                coffeeBeans += 10;
+            }
+            
+        } else if (task == W_MAKE_COFFEE) {
+        
+            var coffeeMachine = instance_nearest(x,y,getTObject(obj_coffeeMachine));
+            var take = min(coffeeMachine.coffeeCount, 3);
+            with coffeeMachine {
+                coffeeCount -= take;
+            }
+            coffees += take;
+            var textObj =  instance_create(x,y,obj_text);
+            textObj.text = "-$" + string(costFormula((getTObject(obj_variableManager)).waterTemp,(getTObject(obj_variableManager)).brewTime,(getTObject(obj_variableManager)).coffeeAmount) * take);
+            textObj.color = c_red;
+            (getTObject(obj_variableManager)).money -= 
+                costFormula((getTObject(obj_variableManager)).waterTemp,
+                            (getTObject(obj_variableManager)).brewTime,
+                            (getTObject(obj_variableManager)).coffeeAmount) * take;
+        
+        } else if (task == W_SERVE_COFFEE) {
+        
+            var inst = instance_nearest(x,y,getTObject(obj_cashier));
+            with inst {
+                for (var i = 0; i &lt; other.coffees; i++) {
+                    event_user(1);
+                }
+            }
+            coffees = 0;
+            
+        } else if (task == W_RETURN_COFFEEBEANS) {
+            
+            var coffeeMachine = instance_nearest(x,y,getTObject(obj_coffeeMachine));
+            coffeeMachine.rawCoffee += coffeeBeans;
+            coffeeBeans = 0;
+        
+        }
+        
+        state = S_WAITING;
+    }
+    
+}
+
+if (collision_circle(x,y,14,obj_worker,false,true)) {
+    var near = instance_nearest(x,y,obj_worker)
+    var xx=path_get_point_x(path_index,1);
+    var yy=path_get_point_y(path_index,1);
+    if (near.path_speed == 1) {
+        path_speed = 0.5;
+        near.path_speed = 1
+    }
+} else {
+    path_speed = 1;
+    if (path_index == -1) {
+        moving = false;
+    }
+}
+
+
+
+exit;
+
+
+////////////////////// OLD LOGIC BEFORE STATEMACHINE
+
+if (coffees == 0) {
+
+    var coffeeMachine = instance_nearest(x,y,getTObject(obj_coffeeMachine));
     var i = 1
     if (moving == false) {
-        repeat (instance_number(obj_coffeeMachine)) {
+        repeat (instance_number(getTObject(obj_coffeeMachine))) {
         if (coffeeMachine.coffeeCount &gt; 0) break;
             i = i + 1;
-            coffeeMachine = instance_nearest_nth(x,y,obj_coffeeMachine,i);
+            coffeeMachine = instance_nearest_nth(x,y,getTObject(obj_coffeeMachine),i);
         }
         setGrid();
-        if (coffeeMachine.rawCoffee &lt;= global.coffeeAmount and
+        if (coffeeMachine.rawCoffee &lt;= obj_variableManager.coffeeAmount and
             coffeeBeans &lt;= 0 and coffeeMachine.coffeeCount &lt; 2) {
             var field = openHarvest();
             moveToPoint(x,y,field.x,field.y,1+random(2));
@@ -141,9 +267,9 @@ alarm[0] = random(10)
         }
         coffees += take;
         var textObj =  instance_create(x,y,obj_text);
-        textObj.text = "-$" + string(costFormula(global.waterTemp,global.brewTime,global.coffeeAmount) * take);
+        textObj.text = "-$" + string(costFormula((getTObject(obj_variableManager)).waterTemp,(getTObject(obj_variableManager)).brewTime,(getTObject(obj_variableManager)).coffeeAmount) * take);
         textObj.color = c_red;
-        global.money -= costFormula(global.waterTemp,global.brewTime,global.coffeeAmount) * take;
+        (getTObject(obj_variableManager)).money -= costFormula((getTObject(obj_variableManager)).waterTemp,(getTObject(obj_variableManager)).brewTime,(getTObject(obj_variableManager)).coffeeAmount) * take;
     }
     
     if (distance_to_object(coffeeMachine) &lt;= 1 and coffeeBeans &gt; 0) {
@@ -167,11 +293,11 @@ alarm[0] = random(10)
     
 } else {
 
-    var inst = instance_nearest(x,y,obj_cashier);
+    var inst = instance_nearest(x,y,getTObject(obj_cashier));
     if (moving == false) {
         setGrid();
 
-        cashRegisters = nearestInstances(x,y,obj_cashier,instance_number(obj_cashier));
+        cashRegisters = nearestInstances(x,y,getTObject(obj_cashier),instance_number(getTObject(obj_cashier)));
         var size = ds_list_size(cashRegisters);
         for (i = 0; i &lt; size; i += 1){
             var cr = ds_list_find_value(cashRegisters,i);
@@ -205,20 +331,7 @@ alarm[0] = random(10)
     }
 }
 
-if (collision_circle(x,y,14,obj_worker,false,true)) {
-    var near = instance_nearest(x,y,obj_worker)
-    var xx=path_get_point_x(path_index,1);
-    var yy=path_get_point_y(path_index,1);
-    if (near.path_speed == 1) {
-        path_speed = 0.5;
-        near.path_speed = 1
-    }
-} else {
-    path_speed = 1;
-    if (path_index == -1) {
-        moving = false;
-    }
-}
+
 
 </string>
           </argument>
@@ -246,9 +359,8 @@ if (collision_circle(x,y,14,obj_worker,false,true)) {
 image_angle = direction-90;
 draw_self()
 draw_path(path,0,0,true);
-if (workTimer &gt; 0) {
-    
-    draw_rectangle(x-16,y-22,x-16+workTimer/100*32,y-18,false);
+if (timer &gt; 0) {
+    draw_rectangle(x-16,y-22,x-16+timer/100*32,y-18,false);
 }
 
 if (showGrid) {

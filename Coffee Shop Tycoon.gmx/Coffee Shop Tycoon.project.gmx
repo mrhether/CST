@@ -89,12 +89,17 @@
     <scripts name="Worker">
       <script>scripts\setGrid.gml</script>
       <script>scripts\moveToPoint.gml</script>
+      <script>scripts\openHarvest.gml</script>
     </scripts>
+    <script>scripts\getTObject.gml</script>
     <script>scripts\openChair.gml</script>
+    <script>scripts\drawCustomerHappies.gml</script>
     <script>scripts\setCreationItem.gml</script>
-    <script>scripts\openHarvest.gml</script>
     <script>scripts\drawSpeachBubble.gml</script>
   </scripts>
+  <shaders name="shaders">
+    <shader type="GLSLES">shaders\shader0.shader</shader>
+  </shaders>
   <fonts name="fonts">
     <font>fonts\arial</font>
     <font>fonts\fTwCenBoldL</font>
@@ -112,8 +117,12 @@
     <object>objects\objWall</object>
     <object>objects\obj_chair</object>
     <object>objects\obj_cashier</object>
+    <object>objects\obj_cashier_team</object>
+    <object>objects\obj_cashier_enemy</object>
     <object>objects\obj_table</object>
     <object>objects\obj_coffeeMachine</object>
+    <object>objects\obj_coffeeMachine_enemy</object>
+    <object>objects\obj_coffeeMachine_team</object>
     <object>objects\obj_crate</object>
     <object>objects\obj_light</object>
     <object>objects\obj_tableLamp</object>
@@ -122,25 +131,29 @@
     <object>objects\obj_customerCreator</object>
     <object>objects\obj_coffee</object>
     <object>objects\obj_worker</object>
+    <object>objects\obj_worker_enemy</object>
+    <object>objects\obj_worker_team</object>
     <object>objects\obj_engine</object>
     <object>objects\avoidable</object>
     <object>objects\obj_3D</object>
     <object>objects\obj_Menu</object>
     <object>objects\obj_variableManager</object>
-    <object>objects\obj_shadow</object>
+    <object>objects\obj_variableManager_enemy</object>
+    <object>objects\obj_variableManager_team</object>
+    <object>objects\obj_team_object</object>
     <object>objects\obj_text</object>
     <object>objects\obj_roomstart</object>
     <object>objects\obj_field</object>
   </objects>
   <rooms name="rooms">
-    <room>rooms\room0</room>
     <room>rooms\room5</room>
+    <room>rooms\room0</room>
     <room>rooms\room3</room>
     <room>rooms\room1</room>
     <room>rooms\room2</room>
     <room>rooms\room4</room>
   </rooms>
-  <constants number="10">
+  <constants number="16">
     <constant name="HM_MAINMENU">0</constant>
     <constant name="HM_COFFEERECIPE">1</constant>
     <constant name="HM_PLAY">2</constant>
@@ -150,7 +163,13 @@
     <constant name="CF_WATERTEMP">5</constant>
     <constant name="CF_BREWTIME">6</constant>
     <constant name="CF_PRICE">7</constant>
-    <constant name="W_FIELD">1</constant>
+    <constant name="W_PICK_COFFEE">1</constant>
+    <constant name="W_MAKE_COFFEE">2</constant>
+    <constant name="W_SERVE_COFFEE">3</constant>
+    <constant name="W_RETURN_COFFEEBEANS">4</constant>
+    <constant name="S_MOVING">1</constant>
+    <constant name="S_PERFORMING">2</constant>
+    <constant name="S_WAITING">3</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

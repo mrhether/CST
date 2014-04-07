@@ -1,4 +1,4 @@
-///setCreationItem(object,sprite,name)
+///setCreationItem(object,sprite,name,cost)
 if (empty == false) {
     var pos = array_length_1d(creations);
 } else  {
@@ -8,3 +8,4 @@ if (empty == false) {
 creations[pos] = argument0;
 creationImage[pos] = argument1;
 creationText[pos] = argument2;
+creationCost[pos] = argument3;

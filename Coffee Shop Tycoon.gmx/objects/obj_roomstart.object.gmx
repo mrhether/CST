@@ -41,7 +41,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>display_reset(8,true);
+            <string>display_reset(2,false);
 alarm[0]=10
 </string>
           </argument>

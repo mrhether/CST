@@ -25,24 +25,26 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>global.coffeeAmount = 1;
+            <string>coffeeAmount = 1;
 global.coffeeAmountMax = 4;
 global.coffeeAmountMin = 0;
-global.waterTemp = 100;
+waterTemp = 100;
 global.waterTempMax = 120;
 global.waterTempMin = 70;
-global.brewTime = 5;
+brewTime = 5;
 global.brewTimeMax = 12;
 global.brewTimeMin = 0.1;
 
-global.coffeePrice = 1.00;
+coffeePrice = 1.00;
 global.coffeePriceMax = 10.00;
 global.coffeePriceMin = 0.00;
 
-global.keepCoffeeLength = 10;
+keepCoffeeLength = 10;
 
-global.money = 1000;
-global.popularity = 5;
+money = 200;
+popularity = 5;
+
+
 
 Fade = 1;
 </string>
@@ -108,31 +110,29 @@ Fade = 1;
             <kind>1</kind>
             <string>draw_set_alpha(Fade)
 
-
-draw_set_halign(fa_left)
-draw_set_valign(fa_top)
+if (x &lt; 300) {
+    draw_set_halign(fa_left)
+    draw_set_valign(fa_top)
+} else {
+    draw_set_halign(fa_right)
+    draw_set_valign(fa_top)
+}
 draw_set_color(c_white)
 
 draw_set_font(fTwCenBoldL)
-draw_text(view_wview[0]*0.01,(view_hview[0]*0.01)-((1-Fade)*200),"Money");
+draw_text(x,y,"Money");
 draw_set_font(fTwCenL)
-draw_text(view_wview[0]*0.01,(view_hview[0]*0.01)-((1-Fade)*200) + 40, "$" + string(global.money));
+draw_text(x,y + 40, "$" + string(self.money));
 
-draw_set_halign(fa_right)
-draw_set_valign(fa_top)
 
 draw_set_font(fTwCenBoldL)
-draw_text(view_wview[0]*0.99,(view_hview[0]*0.01)-((1-Fade)*200),"Popularity");
+draw_text(x,y+80,"Popularity");
 draw_set_font(fTwCenL)
-draw_text(view_wview[0]*0.99,(view_hview[0]*0.01)-((1-Fade)*200) + 40, "" + string(global.popularity));
+draw_text(x,y + 120, "" + string(self.popularity));
 
-//draw_rectangle_color(
-//        view_wview[0]*0.01,
-//        view_hview[0]*0.98,
-//        view_wview[0]*0.99,
-//        view_hview[0]*0.99,
-//        c_blue,c_yellow,c_yellow,c_blue,false)
+
 draw_set_alpha(1);
+drawCustomerHappies();
 </string>
           </argument>
         </arguments>

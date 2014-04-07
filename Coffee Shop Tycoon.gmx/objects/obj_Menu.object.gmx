@@ -60,6 +60,7 @@ InfoSurface=surface_create(1024,2048);
 HasScrollbar=0;
 
 Holding=0;
+team = 0;
 
 instance_deactivate_object(obj_creator);
 
@@ -175,14 +176,14 @@ if( ResetOptions )
         ItemMax=ItemMaxP;
 
         SetInfoWindow("Coffee Recipe",500);
-        SetSliderRow(CF_COFFEEAMT, "Coffee Amount","lbs",global.coffeeAmount,global.coffeeAmountMax,global.coffeeAmountMin);
-        SetSliderRow(CF_WATERTEMP, "Water Temp","deg",global.waterTemp,global.waterTempMax,global.waterTempMin);
-        SetSliderRow(CF_BREWTIME,"Brew Time","min",global.brewTime,global.brewTimeMax,global.brewTimeMin);
+        SetSliderRow(CF_COFFEEAMT, "Coffee Amount","lbs",(getTObject(obj_variableManager)).coffeeAmount,global.coffeeAmountMax,global.coffeeAmountMin);
+        SetSliderRow(CF_WATERTEMP, "Water Temp","deg",(getTObject(obj_variableManager)).waterTemp,global.waterTempMax,global.waterTempMin);
+        SetSliderRow(CF_BREWTIME,"Brew Time","min",(getTObject(obj_variableManager)).brewTime,global.brewTimeMax,global.brewTimeMin);
         
         SetInfoRow("Time","3 mins");
         SetInfoRow("Cost","$0.14");
         
-        SetSliderRow(CF_PRICE, "Sell at", "$", global.coffeePrice,global.coffeePriceMax,global.coffeePriceMin);
+        SetSliderRow(CF_PRICE, "Sell at", "$", (getTObject(obj_variableManager)).coffeePrice,global.coffeePriceMax,global.coffeePriceMin);
         SetInfoRow("Profit per cup","$1.00");
         SetInfoRow("Coffee Quality","");
         
@@ -313,21 +314,21 @@ if( ResetOptions )
 for(i=0;i&lt;=InfoDataMax;i+=1)
 {
     if (InfoDataSliderType[i]==CF_COFFEEAMT){
-        global.coffeeAmount = InfoDataSliderValue[i];
+        (getTObject(obj_variableManager)).coffeeAmount = InfoDataSliderValue[i];
     } else if (InfoDataSliderType[i]==CF_WATERTEMP){
-        global.waterTemp = InfoDataSliderValue[i];
+        (getTObject(obj_variableManager)).waterTemp = InfoDataSliderValue[i];
     } else if (InfoDataSliderType[i]==CF_BREWTIME){
-        global.brewTime = InfoDataSliderValue[i];
+        (getTObject(obj_variableManager)).brewTime = InfoDataSliderValue[i];
     } else if (InfoDataSliderType[i] == CF_PRICE) {
-        global.coffeePrice = InfoDataSliderValue[i];
+        (getTObject(obj_variableManager)).coffeePrice = InfoDataSliderValue[i];
     }
 }
 
-var cost = costFormula(global.waterTemp,global.brewTime,global.coffeeAmount)
-UpdateRowInfo("Time",string(timeFormula(global.waterTemp,global.brewTime,global.coffeeAmount)) + " min");
+var cost = costFormula((getTObject(obj_variableManager)).waterTemp,(getTObject(obj_variableManager)).brewTime,(getTObject(obj_variableManager)).coffeeAmount)
+UpdateRowInfo("Time",string(timeFormula((getTObject(obj_variableManager)).waterTemp,(getTObject(obj_variableManager)).brewTime,(getTObject(obj_variableManager)).coffeeAmount)) + " min");
 UpdateRowInfo("Cost","$" + string(cost));
-UpdateRowInfo("Profit per cup","$" + string(global.coffeePrice - cost));
-UpdateRowInfo("Coffee Quality",string(tasteFormula(global.waterTemp,global.brewTime,global.coffeeAmount)));
+UpdateRowInfo("Profit per cup","$" + string((getTObject(obj_variableManager)).coffeePrice - cost));
+UpdateRowInfo("Coffee Quality",string(tasteFormula((getTObject(obj_variableManager)).waterTemp,(getTObject(obj_variableManager)).brewTime,(getTObject(obj_variableManager)).coffeeAmount)));
 
 
 

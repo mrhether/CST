@@ -1,13 +1,6 @@
-float4 vec4(float x0)
-{
-    return float4(x0, x0, x0, x0);
-}
 // Varyings
-static float2 _coord = {0, 0};
-static float2 _offset0 = {0, 0};
-static float2 _offset1 = {0, 0};
-static float2 _offset2 = {0, 0};
-static float2 _offset3 = {0, 0};
+static float4 _v_vColour = {0, 0, 0, 0};
+static float2 _v_vTexcoord = {0, 0};
 
 static float4 gl_Color[1] =
 {
@@ -20,7 +13,6 @@ uniform bool _gm_AlphaTestEnabled : register(c4);
 uniform sampler2D _gm_BaseTexture : register(s0);
 uniform float4 _gm_FogColour : register(c5);
 uniform bool _gm_PS_FogEnabled : register(c6);
-uniform float _uIntensity : register(c7);
 
 float4 gl_texture2D(sampler2D s, float2 t)
 {
@@ -71,33 +63,17 @@ if(_gm_PS_FogEnabled)
 ;
 ;
 ;
-;
-;
-;
-;
 void gl_main()
 {
 {
-float4 _col = (gl_texture2D(_gm_BaseTexture, _coord) * float4(0.22702703, 0.22702703, 0.22702703, 0.22702703));
-(_col += (gl_texture2D(_gm_BaseTexture, (_coord + _offset0)) * float4(0.19459459, 0.19459459, 0.19459459, 0.19459459)));
-(_col += (gl_texture2D(_gm_BaseTexture, (_coord + _offset1)) * float4(0.12162162, 0.12162162, 0.12162162, 0.12162162)));
-(_col += (gl_texture2D(_gm_BaseTexture, (_coord + _offset2)) * float4(0.054054055, 0.054054055, 0.054054055, 0.054054055)));
-(_col += (gl_texture2D(_gm_BaseTexture, (_coord + _offset3)) * float4(0.016216217, 0.016216217, 0.016216217, 0.016216217)));
-(_col += (gl_texture2D(_gm_BaseTexture, (_coord - _offset0)) * float4(0.19459459, 0.19459459, 0.19459459, 0.19459459)));
-(_col += (gl_texture2D(_gm_BaseTexture, (_coord - _offset1)) * float4(0.12162162, 0.12162162, 0.12162162, 0.12162162)));
-(_col += (gl_texture2D(_gm_BaseTexture, (_coord - _offset2)) * float4(0.054054055, 0.054054055, 0.054054055, 0.054054055)));
-(_col += (gl_texture2D(_gm_BaseTexture, (_coord - _offset3)) * float4(0.016216217, 0.016216217, 0.016216217, 0.016216217)));
-(gl_Color[0] = (_col * vec4(_uIntensity)));
+(gl_Color[0] = (_v_vColour * gl_texture2D(_gm_BaseTexture, _v_vTexcoord)));
 }
 }
 ;
 struct PS_INPUT
 {
-    float2 v0 : TEXCOORD0;
+    float4 v0 : TEXCOORD0;
     float2 v1 : TEXCOORD1;
-    float2 v2 : TEXCOORD2;
-    float2 v3 : TEXCOORD3;
-    float2 v4 : TEXCOORD4;
 };
 
 struct PS_OUTPUT
@@ -107,11 +83,8 @@ struct PS_OUTPUT
 
 PS_OUTPUT main(PS_INPUT input)
 {
-    _coord = input.v0.xy;
-    _offset0 = input.v1.xy;
-    _offset1 = input.v2.xy;
-    _offset2 = input.v3.xy;
-    _offset3 = input.v4.xy;
+    _v_vColour = input.v0;
+    _v_vTexcoord = input.v1.xy;
 
     gl_main();
 

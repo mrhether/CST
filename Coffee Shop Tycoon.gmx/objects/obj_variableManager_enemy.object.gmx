@@ -5,10 +5,10 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>obj_variableManager</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
-    <event eventtype="8" enumb="0">
+    <event eventtype="0" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -25,13 +25,17 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>exit
-var i = 0;
-for (i=0; i &lt; 6; i++) {
-    var dx = i*2;
-    var dy = i*2;
-    draw_sprite_ext(sprite_index,image_single,x+dx,y-dy,1,1,image_angle,c_black,0.9);
-}
+            <string>event_inherited();
+
+coffeeAmount = 1;
+waterTemp = 80;
+brewTime = 5;
+coffeePrice = 1.00;
+
+keepCoffeeLength = 10;
+money = 200;
+popularity = 5;
+team = 1
 </string>
           </argument>
         </arguments>

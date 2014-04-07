@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>-2</depth>
   <persistent>0</persistent>
-  <parentName>obj_shadow</parentName>
+  <parentName>obj_team_object</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -25,7 +25,13 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>thirsty = true;
+            <string>pop = obj_variableManager_enemy.popularity + obj_variableManager_team.popularity
+var r = random(pop + 10)
+if (r &lt;= obj_variableManager_enemy.popularity) team = 1;
+else if (r &lt;= pop) team = 0
+else team = choose(0,1);
+
+thirsty = true;
 outside = true;
 color = choose(c_white,c_green,c_blue,c_red,c_fuchsia);
 
@@ -35,18 +41,20 @@ showGrid = false;
 grid = mp_grid_create(0,0,room_width/16,room_height/16,16,16);
 mp_grid_add_instances(grid,objWall,0);
 mp_grid_add_instances(grid,obj_table,0);
-mp_grid_add_instances(grid,obj_worker,0);
 path = path_add();
-var n = floor(random(instance_number(obj_cashier))) // get a random whole number based on obj amount
-var inst = instance_find( obj_cashier , n ) // find that n'th instance of that type
+var n = floor(random(instance_number(getTObject(obj_cashier)))) // get a random whole number based on obj amount
+var inst = instance_find( getTObject(obj_cashier) , n ) // find that n'th instance of that type
 mp_grid_path(grid,path,x,y,inst.x,inst.y+46,1);
 path_start(path,1+random(2),false,true);
+endX = inst.x;
+endY = inst.y;
 
 happiness = 0;
 money = random(15);
 hasCoffee = false
 enjoy = false
 image_alpha = 0;
+
 </string>
           </argument>
         </arguments>
@@ -93,7 +101,7 @@ image_alpha = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>global.popularity += happiness
+            <string>(getTObject(obj_variableManager)).popularity += happiness
 </string>
           </argument>
         </arguments>
@@ -146,13 +154,22 @@ reversed = false
           <argument>
             <kind>1</kind>
             <string>enjoy = false
-if (random(5) &lt; 2 and hasCoffee == true) enjoy = true;
+if (random(5) &lt; 2 and hasCoffee == true and happiness &gt; 1) enjoy = true;
+else if (random(5) &lt; 2 and happiness &lt; -4) {
+    team = (team + 1) mod 2 // other team
+    enjoy = true // need new name for variable
+}
+
 
 if(enjoy == true) {
     thirsty = true
     path = path_add();
-    var n = floor(random(instance_number(obj_cashier))) // get a random whole number based on obj amount
-    var inst = instance_find( obj_cashier , n ) // find that n'th instance of that type
+    
+    var inst = instance_nearest(x,y,obj_cashier);
+    if (random(25) &gt; 2) team = inst.team;
+    
+    var n = floor(random(instance_number(getTObject(obj_cashier)))) // get a random whole number based on obj amount
+    var inst = instance_find( getTObject(obj_cashier) , n ) // find that n'th instance of that type
     mp_grid_path(grid,path,x,y,inst.x,inst.y+46,1);
     path_start(path,1+random(2),false,true);
     
@@ -188,25 +205,36 @@ reversed = false
         thirsty = false;
         hasCoffee = true
         happiness += 5;
-        global.money += global.coffeePrice;
+        team = cash.team;
+        (getTObject(obj_variableManager)).money += (getTObject(obj_variableManager)).coffeePrice;
         var textObj =  instance_create(x,y,obj_text);
-        textObj.text = "+$" + string(global.coffeePrice);
+        textObj.text = "+$" + string((getTObject(obj_variableManager)).coffeePrice);
         textObj.color = c_green;
         with cash {
             event_user(0);
         }
     }
     customer = collision_circle(x,y,16,obj_customer,false,true)
-    if (customer and customer.reversed == false and
-    (1 - customer.path_position)*path_get_length(customer.path) &lt;= 
-    (1 - path_position)*path_get_length(path)) {
-        path_speed = 0;
-        if (collision_point(x,y,objFloor,false,true)) {
-            happiness -= 0.01
-        } else {
-            happiness -= 0.02
-        }
-        if (happiness == -5) alarm[0] = 1;
+    if (
+        customer 
+        and 
+        customer.reversed == false 
+        and
+        path_get_point_x(path,path_get_number(path)-1) == 
+        path_get_point_x(customer.path,path_get_number(customer.path)-1)
+        and
+        path_get_point_y(path,path_get_number(path)-1) == 
+        path_get_point_y(customer.path,path_get_number(customer.path)-1) 
+        and
+        (1 - customer.path_position)*path_get_length(customer.path) &lt;= 
+        (1 - path_position)*path_get_length(path)) {
+            path_speed = 0;
+            if (collision_point(x ,y ,objFloor ,false ,true )) {
+                happiness -= 0.01
+            } else {
+                happiness -= 0.02
+            }
+            if (happiness == -5) alarm[0] = 1;
     } else {
         path_speed = 1;
     }

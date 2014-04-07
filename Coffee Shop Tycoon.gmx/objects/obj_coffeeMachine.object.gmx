@@ -85,11 +85,11 @@ rawCoffee = 4;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (rawCoffee &gt;= global.coffeeAmount) {
+            <string>if (rawCoffee &gt;= (getTObject(obj_variableManager)).coffeeAmount) {
     coffeeCount += 1;
-    rawCoffee -= global.coffeeAmount;
+    rawCoffee -= getTObject(obj_variableManager).coffeeAmount;
 }
- alarm[0] = timeFormula(global.waterTemp,global.brewTime,global.coffeeAmount) * 10;
+ alarm[0] = timeFormula(getTObject(obj_variableManager).waterTemp,getTObject(obj_variableManager).brewTime,getTObject(obj_variableManager).coffeeAmount) * 10;
 </string>
           </argument>
         </arguments>

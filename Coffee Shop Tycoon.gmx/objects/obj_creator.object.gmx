@@ -28,6 +28,7 @@
             <string>canCreate = true
 empty = true;
 pressed = false;
+team = 0
 </string>
           </argument>
         </arguments>
@@ -48,12 +49,12 @@ pressed = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>setCreationItem(objFloor,sprite0,"Building")
-setCreationItem(objDoor,door,"Entrance")
-setCreationItem(obj_cashier,spr_cashier,"Cash Register")
-setCreationItem(obj_coffeeMachine,spr_coffeemaker,"Coffee Maker")
-setCreationItem(obj_worker,spr_customer1,"Worker")
-setCreationItem(obj_table,spr_table,"Table")
+            <string>setCreationItem(objFloor,sprite0,"Building",10)
+setCreationItem(objDoor,door,"Entrance",25)
+setCreationItem(obj_cashier_team,spr_cashier,"Cash Register",50)
+setCreationItem(obj_coffeeMachine_team,spr_coffeemaker,"Coffee Maker",50)
+setCreationItem(obj_worker_team,spr_customer1,"Worker",50)
+setCreationItem(obj_table,spr_table,"Table",30)
 currentCreation = 0;
 
 xPos = round(mouse_x/64)*64;
@@ -203,6 +204,12 @@ with wallManager {
     var inst = instance_create(xPos,yPos,creations[currentCreation]);
     inst.image_angle = angle;
     
+    var textObj =  instance_create(mouse_x,mouse_y,obj_text);
+    textObj.text = "-$" + string(creationCost[currentCreation]);
+    textObj.color = c_red;
+    vm = getTObject(obj_variableManager);
+    vm.money -= creationCost[currentCreation];
+       
     with wallManager {
         event_user(0);
     }
@@ -259,16 +266,16 @@ var start = view_hview[0]-1;
 
 draw_set_alpha(.65)
 draw_rectangle_color(
-        imageSize*length*0 + offset,start - imageSize*0,imageSize*1 + offset,start - imageSize*(length),
+        imageSize*length*0 + offset,start - imageSize*0,imageSize*(length) + offset,start - imageSize*(1),
         c_black,c_black,c_black,c_black,false);
 
 
 for (var i = 0; i &lt; length; i++) {
 
-    xx = imageSize*i*0 + offset
-    yy = start - imageSize*i;
-    xx2 = imageSize*1 + offset
-    yy2 = start - imageSize*(i+1)
+    xx = imageSize*i*1 + offset
+    yy = start - imageSize*0;
+    xx2 = imageSize*(i+1) + offset
+    yy2 = start - imageSize*(1)
     if (i mod 2) c = 0 else c=0.5
     if (c &gt; 0) {
         draw_set_alpha(c)
@@ -283,7 +290,7 @@ for (var i = 0; i &lt; length; i++) {
             c_black,c_black,c_black,c_black,true);
     }
     draw_sprite_ext(
-        creationImage[i],0,imageSize/2 + offset,start - imageSize*(i+0.5),
+        creationImage[i],0,imageSize*(i+0.5)+ offset,start - imageSize/2,
         0.75,0.75,0,c_white,1);
         
     //If you hover over the text, make it brighter
@@ -293,7 +300,8 @@ for (var i = 0; i &lt; length; i++) {
             xx,yy,xx2,yy2,
             c_white,c_white,c_white,c_white,true);
         draw_set_valign(fa_middle);
-        draw_text(xx2,(yy+yy2)/2,creationText[i]);
+        draw_set_halign(fa_middle);
+        draw_text((xx2+xx)/2,yy - imageSize,creationText[i] + " $" + string(creationCost[i]));
         canCreate = false;
         alarm[2] = 3;
     }
