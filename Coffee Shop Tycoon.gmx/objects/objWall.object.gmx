@@ -3,9 +3,9 @@
   <spriteName>wall</spriteName>
   <solid>-1</solid>
   <visible>-1</visible>
-  <depth>-5</depth>
+  <depth>-14</depth>
   <persistent>0</persistent>
-  <parentName>obj_3D</parentName>
+  <parentName>self</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -29,6 +29,8 @@
 if (instDoor.x == x and instDoor.y == y) {
     instance_destroy();
 }
+image_index = choose(0,1)
+image_speed = 0
 
 event_inherited()
 height=14;
@@ -63,7 +65,7 @@ height=14;
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="72">
+    <event eventtype="7" enumb="25">
       <action>
         <libid>1</libid>
         <id>603</id>

@@ -29,6 +29,7 @@
     <sprite>sprites\spr_customercoffee</sprite>
     <sprite>sprites\spr_field</sprite>
     <sprite>sprites\spr_floor2</sprite>
+    <sprite>sprites\spr_chair2</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
@@ -96,9 +97,12 @@
     <script>scripts\drawCustomerHappies.gml</script>
     <script>scripts\setCreationItem.gml</script>
     <script>scripts\drawSpeachBubble.gml</script>
+    <script>scripts\seatQuality.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shader0.shader</shader>
+    <shader type="GLSLES">shaders\bloom.shader</shader>
+    <shader type="GLSLES">shaders\sh_bloomv2.shader</shader>
   </shaders>
   <fonts name="fonts">
     <font>fonts\arial</font>
@@ -117,8 +121,8 @@
     <object>objects\objWall</object>
     <object>objects\obj_chair</object>
     <object>objects\obj_cashier</object>
-    <object>objects\obj_cashier_team</object>
     <object>objects\obj_cashier_enemy</object>
+    <object>objects\obj_cashier_team</object>
     <object>objects\obj_table</object>
     <object>objects\obj_coffeeMachine</object>
     <object>objects\obj_coffeeMachine_enemy</object>
@@ -144,6 +148,8 @@
     <object>objects\obj_text</object>
     <object>objects\obj_roomstart</object>
     <object>objects\obj_field</object>
+    <object>objects\obj_decal</object>
+    <object>objects\obj_screenShader</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room5</room>

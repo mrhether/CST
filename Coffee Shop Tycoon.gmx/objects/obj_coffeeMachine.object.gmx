@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>-1</depth>
   <persistent>0</persistent>
-  <parentName>obj_3D</parentName>
+  <parentName>self</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -63,6 +63,10 @@ event_inherited();
 height=5;
 
 rawCoffee = 4;
+
+textAlpha = 0
+
+//instance_create(lengthdir_x(-16+random(4),ang),-16+random(4),obj_tableLamp);
 </string>
           </argument>
         </arguments>
@@ -90,6 +94,29 @@ rawCoffee = 4;
     rawCoffee -= getTObject(obj_variableManager).coffeeAmount;
 }
  alarm[0] = timeFormula(getTObject(obj_variableManager).waterTemp,getTObject(obj_variableManager).brewTime,getTObject(obj_variableManager).coffeeAmount) * 10;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>image_single = min(12,coffeeCount)
 </string>
           </argument>
         </arguments>
@@ -164,34 +191,20 @@ with coffees[coffeeCount] {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>drawSpeachBubble("CoffeeBeans: " + string(rawCoffee) + " CoffeeReady:" + string(coffeeCount))
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>//draw_sprite(sprite_index,min(12,coffeeCount),x,y)
-image_single = min(12,coffeeCount)
-event_inherited();
+            <string>width_var = sprite_index.sprite_width
+height_var = sprite_index.sprite_height
 
+if (textAlpha &lt; 2 and mouse_rectangle(x-width_var/2,y-height_var/2,x+width_var/2,y+height_var/2)) {
+    textAlpha += 0.1
+    
+} else if (textAlpha &gt; 0) {
+    textAlpha -= 0.1
+}
 
+if (textAlpha &gt; 0) {
+    draw_set_alpha(textAlpha);
+    drawSpeachBubble("CoffeeBeans: " + string(rawCoffee) + " CoffeeReady:" + string(coffeeCount))
+}
 </string>
           </argument>
         </arguments>

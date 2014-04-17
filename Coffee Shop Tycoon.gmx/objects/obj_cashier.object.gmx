@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>-1</depth>
   <persistent>0</persistent>
-  <parentName>obj_3D</parentName>
+  <parentName>self</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -65,6 +65,14 @@ coffees[2] = instance_create(x+2,y+11,obj_coffee);
 //alarm[0] = 60
 event_inherited();
 height=5;    
+
+dec = instance_create(x,y,obj_decal);
+dec.sprite_index = sprite_index;
+dec.image_speed = 0;
+dec.image_index = 1;
+image_speed = 0;
+image_index = 0;
+
 </string>
           </argument>
         </arguments>

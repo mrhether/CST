@@ -25,9 +25,12 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>pop = obj_variableManager_enemy.popularity + obj_variableManager_team.popularity
+            <string>ePop = obj_variableManager_enemy.popularity + 100
+hPop = obj_variableManager_team.popularity + 100
+
+pop = ePop + hPop
 var r = random(pop + 10)
-if (r &lt;= obj_variableManager_enemy.popularity) team = 1;
+if (r &lt;= ePop) team = 1;
 else if (r &lt;= pop) team = 0
 else team = choose(0,1);
 
@@ -158,6 +161,7 @@ if (random(5) &lt; 2 and hasCoffee == true and happiness &gt; 1) enjoy = true;
 else if (random(5) &lt; 2 and happiness &lt; -4) {
     team = (team + 1) mod 2 // other team
     enjoy = true // need new name for variable
+    happiness += 2+random(2);
 }
 
 
@@ -204,7 +208,14 @@ reversed = false
     if (distance_to_object(cash) &lt;= 1 and cash.coffeeCount &gt; 0) {
         thirsty = false;
         hasCoffee = true
-        happiness += 5;
+        var taste = tasteFormula(getTObject(obj_variableManager).waterTemp,
+                                  getTObject(obj_variableManager).brewTime,
+                                  getTObject(obj_variableManager).coffeeAmount);
+        if (taste &gt; 0) {
+            happiness += taste / ((getTObject(obj_variableManager)).coffeePrice + 0.01);
+        } else {
+            happiness += taste * ((getTObject(obj_variableManager)).coffeePrice + 0.01)
+        }
         team = cash.team;
         (getTObject(obj_variableManager)).money += (getTObject(obj_variableManager)).coffeePrice;
         var textObj =  instance_create(x,y,obj_text);
@@ -284,6 +295,8 @@ if (image_speed == 0) {
         direction-=1
     }
 }
+
+
 </string>
           </argument>
         </arguments>
@@ -315,6 +328,10 @@ if (reversed == true and hasCoffee == false) {
     var text = "I'm sick of waiting"
     drawSpeachBubble(text);
 }
+
+
+
+
 </string>
           </argument>
         </arguments>

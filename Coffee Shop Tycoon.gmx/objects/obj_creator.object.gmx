@@ -260,37 +260,40 @@ pressed = false
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var imageSize = 64
+            <string>
+var imageSize = 64
 var length = array_length_1d(creations);
 var start = view_hview[0]-1;
+var startX = abs(view_wview[0] - imageSize*(length))/2;
 
 draw_set_alpha(.65)
 draw_rectangle_color(
-        imageSize*length*0 + offset,start - imageSize*0,imageSize*(length) + offset,start - imageSize*(1),
-        c_black,c_black,c_black,c_black,false);
+        imageSize*length*0 + offset + startX, start - imageSize*0, imageSize*(length) + offset + startX, start - imageSize*(1),
+        c_orange,c_orange,c_orange,c_orange,false);
 
 
 for (var i = 0; i &lt; length; i++) {
 
-    xx = imageSize*i*1 + offset
+    xx = imageSize*i*1 + offset + startX
     yy = start - imageSize*0;
-    xx2 = imageSize*(i+1) + offset
+    xx2 = imageSize*(i+1) + offset + startX
     yy2 = start - imageSize*(1)
     if (i mod 2) c = 0 else c=0.5
     if (c &gt; 0) {
         draw_set_alpha(c)
+        //draw_rectangle_color(
+        //    xx,yy,xx2,yy2,
+        //    c_black,c_black,c_black,c_black,false);
+    }
+    draw_set_alpha(0.5)
+    if (currentCreation == i) {
         draw_rectangle_color(
             xx,yy,xx2,yy2,
             c_black,c_black,c_black,c_black,false);
     }
-    draw_set_alpha(1)
-    if (currentCreation == i) {
-        draw_rectangle_color(
-            xx,yy,xx2,yy2,
-            c_black,c_black,c_black,c_black,true);
-    }
+    
     draw_sprite_ext(
-        creationImage[i],0,imageSize*(i+0.5)+ offset,start - imageSize/2,
+        creationImage[i],0,imageSize*(i+0.5)+ offset + startX,start - imageSize/2,
         0.75,0.75,0,c_white,1);
         
     //If you hover over the text, make it brighter
@@ -301,7 +304,7 @@ for (var i = 0; i &lt; length; i++) {
             c_white,c_white,c_white,c_white,true);
         draw_set_valign(fa_middle);
         draw_set_halign(fa_middle);
-        draw_text((xx2+xx)/2,yy - imageSize,creationText[i] + " $" + string(creationCost[i]));
+        draw_text((xx2+xx)/2,yy - imageSize - 12,creationText[i] + " $" + string(creationCost[i]));
         canCreate = false;
         alarm[2] = 3;
     }
@@ -315,6 +318,7 @@ for (var i = 0; i &lt; length; i++) {
     }
     
 }
+
 </string>
           </argument>
         </arguments>

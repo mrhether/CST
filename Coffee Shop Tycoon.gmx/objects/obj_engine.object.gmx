@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>-10</depth>
+  <depth>-15</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -104,8 +104,8 @@ SL_engine_ini_begin(); // Commence l'initialisation du système
 global.sl_viewid  = 0;    // Index de la view dans laquelle afficher les effets
 sl_buffer_xmargin = 8;    // Marges du buffer
 sl_buffer_ymargin = 8;
-//sl_timespeed = 1/60 * (room_speed/120)
-sl_timespeed = 0;
+sl_timespeed = 1/60 * (room_speed/120)
+//sl_timespeed = 0;
 sl_maxexposure   = 0.45; // Facteur maximal de saturation des lumières
 
 //sl_ambient_color        = c_white; // Couleur de la lumière ambiante
@@ -121,29 +121,32 @@ sl_sunshadows_alphalimit  = 0.61; // Taux de luminosité ambiante minimum pour l
 sl_sunshadows_margin      = 200;  // Taille de la marge entourant la surface d'ombre, en pixels
 
 // Facteurs d'étirement des ombres solaires appliqués pour chaque layer
-sl_sunshadows_layerscale[0] = 0.2;
-sl_sunshadows_layerscale[1] = 0.1;
+sl_sunshadows_layerscale[0] = 0.1;
+sl_sunshadows_layerscale[1] = 0.3;
 
 sl_ambientshadows_active = true; // Active le rendu des ombres ambiantes
 
 //SL_sprite_set_ambient(obj_worker);
 
 //SL_sprite_set_ambient(objWall); 
-SL_global_cast_obj(0, objWall, -1,1,0); 
-SL_global_cast_obj(0, objDoor, -1,1,0); 
-SL_global_cast_obj(1, obj_cashier, -1,1,1); 
-SL_global_cast_obj(1, obj_coffeeMachine, -1,1,1); 
-SL_global_cast_obj(1, obj_customer, -1,1,1); 
-SL_global_cast_obj(1, obj_worker, -1,1,1); 
-SL_global_cast_obj(1, obj_table, -1,1,1); 
-SL_global_cast_obj(1, obj_field, -1,1,1); 
+ 
+
+SL_global_cast_obj(0, obj_cashier, -1,1,1); 
+SL_global_cast_obj(0, obj_coffeeMachine, -1,1,1); 
+SL_global_cast_obj(0, obj_customer, -1,1,1); 
+SL_global_cast_obj(0, obj_worker, -1,1,1); 
+SL_global_cast_obj(0, obj_table, -1,1,1); 
+SL_global_cast_obj(0, obj_field, -1,1,1); 
+
+SL_global_cast_obj(1, objDoor, -1,1,0); 
+SL_global_cast_obj(1, objWall, -1,1,0);
 
 
 SL_add_light(obj_tableLamp); // Définit l'objet lumière
 SL_add_light(obj_light); // Définit l'objet lumière
 
 SL_ToD_default();    // Initialisation du ToD
-SL_set_time(14);   // Initialisation de l'heure
+SL_set_time(17);   // Initialisation de l'heure
 SL_engine_ini_end(); // Termine l'initialisation du système
 
 deactivate = false
